@@ -226,11 +226,7 @@
             let ov = parseFloat(document.getElementById('odevPuan').value);
             let po = parseFloat(document.getElementById('odevOran').value);
             let hv = ((v * (ps / 100)) + (ov * (po / 100)));
-
-            let t = (60 - hv) * (100 / (100 - (ps + po)));
-
             let t=(60-hv)*(100/(100-(ps+po)));
-
 
             let finalPuan = document.getElementById('finalPuan').value;
             let finalOran = document.getElementById('finalOran').value;
@@ -253,11 +249,11 @@
                 if (s >= 60) {
                     document.body.style.backgroundColor = "#28a745"; // Green for success
                     resultDiv.className = 'result success';
-                    resultDiv.innerHTML = `Sonuç: ${s.toFixed(2)} - Başarılı`;
+                    resultDiv.innerHTML = Sonuç: ${s.toFixed(2)} - Başarılı;
                 } else {
                     document.body.style.backgroundColor = "#dc3545"; // Red for fail
                     resultDiv.className = 'result fail';
-                    resultDiv.innerHTML = `Sonuç: ${s.toFixed(2)} - Başarısız`;
+                    resultDiv.innerHTML = Sonuç: ${s.toFixed(2)} - Başarısız;
                 }
                 detailsHtml += `
                     <p>Final Puanı: ${f}</p>
@@ -266,7 +262,7 @@
             } else {
                 resultDiv.style.display = 'block';
                 resultDiv.className = 'result';
-                resultDiv.innerHTML = `Vize Sonucu: ${hv.toFixed(2)}<br>Geçmek için finalde almanız gereken puan: ${t.toFixed(2)}`;
+                resultDiv.innerHTML = Vize Sonucu: ${hv.toFixed(2)}<br>Geçmek için finalde almanız gereken puan: ${t.toFixed(2)};
             }
 
             detailsDiv.innerHTML = detailsHtml;
@@ -281,9 +277,7 @@
             document.getElementById('finalPuan').value = '';
             document.getElementById('finalOran').value = '';
         }
-        
     </script>
-    
 </body>
 
 </html>
