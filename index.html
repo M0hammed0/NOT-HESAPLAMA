@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not Hesaplama</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #007bff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            width: 80%;
+            max-width: 800px;
+            transition: height 0.5s ease-in-out;
+        }
+
+        .inner-container {
+            display: flex;
+            width: 100%;
+        }
+
+        .form-section,
+        .result-section {
+            padding: 20px;
+            box-sizing: border-box;
+            width: 50%;
+        }
+
+        .form-section {
+            background: #fff;
+            border-right: 2px solid #f0f0f0;
+        }
+
+        .result-section {
+            background: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+        .form-group input[type="button"] {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            border-radius: 25px;
+        }
+
+        .form-group input[type="button"]:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .result,
+        .details {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+            animation: fadeIn 1s ease forwards;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: #fff;
+        }
+
+        .result.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .result.fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .details {
+            background: #f0f4f8;
+            color: #333;
+            border-radius: 15px;
+        }
+
+        .details p {
+            margin: 5px 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="inner-container">
+            <div class="form-section">
+                <h1>Not Hesaplama</h1>
+                <div class="form-group">
+                    <label for="vizePuan">Vize Puanı:</label>
+                    <input type="number" id="vizePuan" required>
+                </div>
+                <div class="form-group">
+                    <label for="vizeOran">Vize Oranı (%):</label>
+                    <input type="number" id="vizeOran" required>
+                </div>
+                <div class="form-group">
+                    <label for="odevPuan">Ödev Puanı:</label>
+                    <input type="number" id="odevPuan" required>
+                </div>
+                <div class="form-group">
+                    <label for="odevOran">Ödev Oranı (%):</label>
+                    <input type="number" id="odevOran" required>
+                </div>
+                <div class="form-group">
+                    <input type="button" value="Hesapla" onclick="hesapla()">
+                </div>
+                <div class="form-group">
+                    <label for="finalPuan">Final Puanı (opsiyonel):</label>
+                    <input type="number" id="finalPuan">
+                </div>
+                <div class="form-group">
+                    <label for="finalOran">Final Oranı (opsiyonel):</label>
+                    <input type="number" id="finalOran">
+                </div>
+            </div>
+            <div class="result-section">
+                <div class="result" id="result"></div>
+                <div class="details" id="details"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function hesapla() {
+            let v = parseFloat(document.getElementById('vizePuan').value);
+            let ps = parseFloat(document.getElementById('vizeOran').value);
+            let ov = parseFloat(document.getElementById('odevPuan').value);
+            let po = parseFloat(document.getElementById('odevOran').value);
+            let hv = ((v * (ps / 100)) + (ov * (po / 100)));
+            let t = (60 - hv) * 2;
+
+            let finalPuan = document.getElementById('finalPuan').value;
+            let finalOran = document.getElementById('finalOran').value;
+            let resultDiv = document.getElementById('result');
+            let detailsDiv = document.getElementById('details');
+
+            let detailsHtml = `
+                <p>Vize Puanı: ${v}</p>
+                <p>Vize Oranı: ${ps}%</p>
+                <p>Ödev Puanı: ${ov}</p>
+                <p>Ödev Oranı: ${po}%</p>
+            `;
+
+            if (finalPuan && finalOran) {
+                let f = parseFloat(finalPuan);
+                let finalPercent = parseFloat(finalOran);
+                let hf = ((f * (finalPercent / 100)));
+                let s = hv + hf;
+                resultDiv.style.display = 'block';
+                if (s >= 60) {
+                    document.body.style.backgroundColor = "#28a745";
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `Sonuç: ${s.toFixed(2)} - Başarılı`;
+                } else {
+                    document.body.style.backgroundColor = "#dc3545";
+                    resultDiv.className = 'result fail';
+                    resultDiv.innerHTML = `Sonuç: ${s.toFixed(2)} - Başarısız`;
+                }
+                detailsHtml += `
+                    <p>Final Puanı: ${f}</p>
+                    <p>Final Oranı: ${finalPercent}%</p>
+                `;
+            } else {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result';
+                resultDiv.innerHTML = `Vize Sonucu: ${hv.toFixed(2)}<br>Geçmek için finalde almanız gereken puan: ${t.toFixed(2)}`;
+            }
+
+            detailsDiv.innerHTML = detailsHtml;
+            detailsDiv.style.display = 'block';
+            detailsDiv.style.animation = 'slideIn 1s ease forwards';
+
+            // Formu sıfırla
+            document.getElementById('vizePuan').value = '';
+            document.getElementById('vizeOran').value = '';
+            document.getElementById('odevPuan').value = '';
+            document.getElementById('odevOran').value = '';
+            document.getElementById('finalPuan').value = '';
+            document.getElementById('finalOran').value = '';
+        }
+    </script>
+</body>
+
+</html>
