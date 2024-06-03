@@ -157,6 +157,25 @@
                 transform: translateX(0);
             }
         }
+
+        @media (max-width: 600px) {
+
+            /* Updated breakpoint for smaller screens */
+            .inner-container {
+                flex-direction: column;
+            }
+
+            .form-section,
+            .result-section {
+                width: 100%;
+            }
+
+            .form-group input {
+                /* Adjust input width for smaller screens */
+                width: 90%;
+                /* Or adjust as needed */
+            }
+        }
     </style>
 </head>
 
@@ -228,11 +247,11 @@
                 let s = hv + hf;
                 resultDiv.style.display = 'block';
                 if (s >= 60) {
-                    document.body.style.backgroundColor = "#28a745";
+                    document.body.style.backgroundColor = "#28a745"; // Green for success
                     resultDiv.className = 'result success';
                     resultDiv.innerHTML = `Sonuç: ${s.toFixed(2)} - Başarılı`;
                 } else {
-                    document.body.style.backgroundColor = "#dc3545";
+                    document.body.style.backgroundColor = "#dc3545"; // Red for fail
                     resultDiv.className = 'result fail';
                     resultDiv.innerHTML = `Sonuç: ${s.toFixed(2)} - Başarısız`;
                 }
@@ -250,7 +269,7 @@
             detailsDiv.style.display = 'block';
             detailsDiv.style.animation = 'slideIn 1s ease forwards';
 
-            // Formu sıfırla
+            // Formu sıfırla (Reset the form)
             document.getElementById('vizePuan').value = '';
             document.getElementById('vizeOran').value = '';
             document.getElementById('odevPuan').value = '';
