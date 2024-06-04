@@ -207,10 +207,7 @@
                     <label for="finalPuan">Final Puanı (opsiyonel):</label>
                     <input type="number" id="finalPuan">
                 </div>
-                <div class="form-group">
-                    <label for="finalOran">Final Oranı (opsiyonel):</label>
-                    <input type="number" id="finalOran">
-                </div>
+
             </div>
             <div class="result-section">
                 <div class="result" id="result"></div>
@@ -226,10 +223,10 @@
             let ov = parseFloat(document.getElementById('odevPuan').value);
             let po = parseFloat(document.getElementById('odevOran').value);
             let hv = ((v * (ps / 100)) + (ov * (po / 100)));
-            let t = (60 - hv) * 2;
+            let t = (60 - hv) * (100 / (100 - (ps + po)));
 
             let finalPuan = document.getElementById('finalPuan').value;
-            let finalOran = document.getElementById('finalOran').value;
+
             let resultDiv = document.getElementById('result');
             let detailsDiv = document.getElementById('details');
 
@@ -240,9 +237,9 @@
                 <p>Ödev Oranı: ${po}%</p>
             `;
 
-            if (finalPuan && finalOran) {
+            if (finalPuan) {
                 let f = parseFloat(finalPuan);
-                let finalPercent = parseFloat(finalOran);
+                let finalPercent = (100 - (ps + po));
                 let hf = ((f * (finalPercent / 100)));
                 let s = hv + hf;
                 resultDiv.style.display = 'block';
@@ -257,7 +254,7 @@
                 }
                 detailsHtml += `
                     <p>Final Puanı: ${f}</p>
-                    <p>Final Oranı: ${finalPercent}%</p>
+                    <p>Final oranı: ${finalPercent}%</p>
                 `;
             } else {
                 resultDiv.style.display = 'block';
